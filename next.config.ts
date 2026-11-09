@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Evita processos auxiliares que falham no ambiente local do Windows.
+  experimental: { workerThreads: process.env.NODE_ENV === "development" },
   turbopack: {
     rules: {
       "*.css": {
