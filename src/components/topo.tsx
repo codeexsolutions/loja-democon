@@ -12,7 +12,7 @@ import { useLoja } from "@/lib/loja";
 const LINKS = [
   { href: "/", rotulo: "Início" },
   { href: "/catalogo", rotulo: "Catálogo" },
-  { href: "/#para-voce", rotulo: "Para você" },
+  { href: "/#para-voce", rotulo: "Produtos" },
   { href: "/catalogo?ordem=menor", rotulo: "Ofertas" },
 ];
 
@@ -35,7 +35,7 @@ function TopoConteudo() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 border-b transition-colors duration-300 ${
-        colapsada ? "border-white/[0.07] bg-noite/95" : "border-transparent bg-transparent"
+        colapsada ? "vidro-barra border-white/[0.14]" : "border-transparent bg-transparent"
       }`}
     >
       <motion.div
@@ -58,7 +58,7 @@ function TopoConteudo() {
                 key={l.href}
                 href={l.href}
                 aria-current={ativo ? "page" : undefined}
-                className={`relative isolate rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                className={`relative isolate rounded-full px-4 py-2 text-sm transition-colors ${
                   ativo ? "text-texto" : "text-suave hover:text-texto"
                 }`}
               >
@@ -86,7 +86,7 @@ function TopoConteudo() {
             <ShoppingBag size={21} />
             <AnimatePresence mode="popLayout">
             {quantidade > 0 && (
-              <motion.span key={quantidade} initial={{ scale: 0.4, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.4, opacity: 0 }} className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-lima px-1 text-[11px] font-bold text-noite">
+              <motion.span key={quantidade} initial={{ scale: 0.4, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.4, opacity: 0 }} className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-lima px-1 text-[11px] text-noite">
                 {quantidade}
               </motion.span>
             )}

@@ -38,7 +38,7 @@ export function Colecoes({ colecoes }: { colecoes: Colecao[] }) {
                     {c.total} {c.total === 1 ? "produto" : "produtos"}
                   </span>
                 </div>
-                <span className="text-sm font-medium text-suave transition group-hover:text-lima">Ver →</span>
+                <span className="text-sm text-suave transition group-hover:text-lima">Ver →</span>
               </div>
             </Link>
           </Revelar>

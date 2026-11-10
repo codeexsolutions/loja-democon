@@ -305,7 +305,7 @@ function Chip({
     <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}
       onClick={onClick}
       aria-pressed={ativo}
-      className={`rounded-full py-2 text-sm font-medium capitalize transition ${quadrado ? "min-w-11 px-3" : "px-4"} ${
+      className={`rounded-full py-2 text-sm capitalize transition ${quadrado ? "min-w-11 px-3" : "px-4"} ${
         ativo ? "bg-lima text-noite" : "bg-painel-2 text-texto hover:bg-linha"
       }`}
     >

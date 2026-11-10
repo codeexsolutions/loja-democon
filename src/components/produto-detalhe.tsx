@@ -8,6 +8,7 @@ import { useCarrinho } from "@/lib/carrinho";
 import { coresDaColecao, estoqueTotal, ordenarTamanhos, seloDe } from "@/lib/catalogo";
 import { registrar } from "@/lib/perfil";
 import { brl, type Produto } from "@/lib/tipos";
+import { galeriaDe, universoDe } from "@/lib/universos";
 import { GradeProdutos } from "./card-produto";
 import { Secao } from "./secao";
 import { suave } from "./movimento";
@@ -17,6 +18,10 @@ export function ProdutoDetalhe({ produto, relacionados = [] }: { produto: Produt
   const [c1, c2] = coresDaColecao(produto.categoria);
   const selo = seloDe(produto);
   const esgotado = estoqueTotal(produto) === 0;
+  // Fotos do ensaio da coleção (frente, costas, cena...), quando o produto tiver.
+  const galeria = useMemo(() => galeriaDe(produto, universoDe(produto)), [produto]);
+  const [foto, setFoto] = useState(0);
+  const imagem = galeria[foto]?.src ?? produto.imagem_url;
 
   const cores = useMemo(() => [...new Set(produto.variacoes.map((v) => v.cor))], [produto]);
   const [cor, setCor] = useState(cores[0] ?? "");
@@ -79,10 +84,10 @@ export function ProdutoDetalhe({ produto, relacionados = [] }: { produto: Produt
       <motion.div aria-hidden="true" className="peca-progresso" style={{ scaleX: reduzir ? scrollYProgress : progresso }} />
       <section className="peca-experiencia" style={{ "--c1": c1, "--c2": c2 } as React.CSSProperties}>
         <motion.div className="peca-palco" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-          {produto.imagem_url && (
+          {imagem && (
             <div aria-hidden="true" className="peca-fundo-imagem">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={produto.imagem_url} alt="" />
+              <img src={imagem} alt="" />
             </div>
           )}
           <div aria-hidden="true" className="peca-vidro" />
@@ -91,15 +96,24 @@ export function ProdutoDetalhe({ produto, relacionados = [] }: { produto: Produt
             {selo && <span className="peca-etiqueta" style={{ background: selo.cor }}>{selo.rotulo}</span>}
           </div>
           <div aria-hidden="true" className="peca-pixels"><PixelEstrela /><PixelEstrela /><PixelEstrela /></div>
-          {produto.imagem_url ? (
+          {imagem ? (
             <motion.button type="button" className="peca-imagem" onClick={() => setZoom(true)} aria-label={"Ampliar foto de " + produto.nome} whileHover={reduzir ? {} : { scale: 1.035, rotate: -2 }} whileTap={{ scale: 0.99 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={produto.imagem_url} alt={produto.nome} className={esgotado ? "grayscale opacity-60" : ""} />
+              <img key={imagem} src={imagem} alt={produto.nome + (galeria[foto] ? " — " + galeria[foto].rotulo : "")} className={esgotado ? "grayscale opacity-60" : ""} />
             </motion.button>
           ) : <div className="peca-sem-foto">{produto.nome}</div>}
           <div className="peca-palco-base">
-            <span className="peca-micro">Feita para o seu universo.</span>
-            {produto.imagem_url && <button type="button" onClick={() => setZoom(true)} className="peca-ampliar"><ZoomIn size={16} /> Ampliar foto</button>}
+            {galeria.length > 1 ? (
+              <div className="peca-miniaturas" role="group" aria-label="Fotos do produto">
+                {galeria.map((g, k) => (
+                  <button key={g.src} type="button" aria-pressed={k === foto} aria-label={g.rotulo} title={g.rotulo} onClick={() => setFoto(k)}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={g.src} alt="" loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            ) : <span className="peca-micro">Feita para o seu universo.</span>}
+            {imagem && <button type="button" onClick={() => setZoom(true)} className="peca-ampliar"><ZoomIn size={16} /> Ampliar foto</button>}
           </div>
         </motion.div>
         <motion.div className="peca-info" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: suave }}>
@@ -135,12 +149,12 @@ export function ProdutoDetalhe({ produto, relacionados = [] }: { produto: Produt
         <div role="dialog" aria-modal="true" aria-label={"Foto ampliada: " + produto.nome} className="peca-zoom-conteudo" onClick={event => event.stopPropagation()}>
           <div aria-hidden="true" className="peca-fundo-imagem">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={produto.imagem_url!} alt="" />
+            <img src={imagem!} alt="" />
           </div>
           <div aria-hidden="true" className="peca-vidro" />
           <button autoFocus type="button" aria-label="Fechar foto ampliada" onClick={() => setZoom(false)} className="peca-zoom-fechar" onKeyDown={event => { if (event.key === "Tab") { event.preventDefault(); event.currentTarget.focus(); } }}><X size={24} /></button>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <div className="peca-zoom-foto"><img src={produto.imagem_url!} alt={produto.nome} /></div>
+          <div className="peca-zoom-foto"><img src={imagem!} alt={produto.nome} /></div>
         </div>
       </motion.div>}</AnimatePresence>
     </>

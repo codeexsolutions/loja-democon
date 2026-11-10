@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 const TEMAS = ["laranja", "branco", "preto"] as const;
-const FUNDOS = ["santuario", "cidade", "floresta", "espaco", "deserto", "arcade"] as const;
+const FUNDOS = ["santuario", "cidade", "floresta", "espaco", "deserto"] as const;
 let entrada: { tema: string; fundo: string } | undefined;
 
 function escolher(opcoes: readonly string[], chave: string) {
@@ -22,7 +22,7 @@ export function FundoPixel() {
   const reduzir = useReducedMotion();
   const host = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const veu = useTransform(scrollY, [0, 600], [0.25, 0.58]);
+  const veu = useTransform(scrollY, [0, 900], [0.12, 0.30]);
 
   useEffect(() => {
     // Cor da interface e cenário são escolhas independentes, uma vez por entrada.
@@ -47,7 +47,7 @@ export function FundoPixel() {
     else if (!document.querySelector('script[data-democon-three]')) {
       const script = document.createElement("script");
       script.type = "module";
-      script.src = "/scripts/fundo-three.mjs";
+      script.src = "/scripts/fundo-cenario.mjs";
       script.dataset.democonThree = "true";
       document.head.appendChild(script);
     }
@@ -58,7 +58,7 @@ export function FundoPixel() {
     <div aria-hidden className="fundo-interativo fixed inset-0 -z-10 overflow-hidden bg-noite">
       <div className="fundo-cena fundo-fallback absolute inset-0" />
       <div ref={host} className="fundo-three absolute inset-0" />
-      <motion.div className="absolute inset-0 bg-noite" style={{ opacity: naHome ? veu : 0.58 }} />
+      <motion.div className="absolute inset-0 bg-noite" style={{ opacity: naHome ? veu : 0.38 }} />
       <div className="fundo-vinheta absolute inset-0" />
     </div>
   );

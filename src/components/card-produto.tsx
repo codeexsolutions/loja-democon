@@ -14,9 +14,9 @@ export function CardProduto({ p, prioridade = false }: { p: Produto; prioridade?
   const comEstoque = new Set(p.variacoes.filter((v) => v.estoque > 0).map((v) => v.tamanho));
 
   return (
-    <Link href={`/produto/${p.id}`} className="group block">
+    <Link href={`/produto/${p.id}`} className="group card-produto">
       <div
-        className="foto-produto relative aspect-[4/5] overflow-hidden rounded-2xl"
+        className="foto-produto relative aspect-[4/5] overflow-hidden"
         style={{ "--c1": c1, "--c2": c2 } as React.CSSProperties}
       >
         {p.imagem_url ? (
@@ -30,7 +30,7 @@ export function CardProduto({ p, prioridade = false }: { p: Produto; prioridade?
             }`}
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-5xl font-bold text-black/20">
+          <div className="flex h-full items-center justify-center text-5xl text-black/20">
             {p.nome.charAt(0)}
           </div>
         )}
@@ -41,13 +41,13 @@ export function CardProduto({ p, prioridade = false }: { p: Produto; prioridade?
         )}
       </div>
 
-      <div className="mt-3 space-y-1 px-0.5">
+      <div className="card-produto-info space-y-1">
         {p.categoria && (
           <div className="rotulo text-[10px]" style={{ color: c1 }}>
             {p.categoria}
           </div>
         )}
-        <h3 className="line-clamp-1 font-medium transition group-hover:text-lima">{p.nome}</h3>
+        <h3 className="line-clamp-1 transition group-hover:text-lima">{p.nome}</h3>
         <div className="flex items-center justify-between gap-2">
           <span className="titulo text-lg">{brl(p.preco)}</span>
           {tamanhos.length > 0 && (

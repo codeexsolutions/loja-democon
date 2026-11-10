@@ -15,14 +15,14 @@ export function seloDe(p: Produto): Selo {
 // Cada coleção (categoria) ganha um par de cores de aquarela. Categorias novas, criadas
 // pelo lojista no painel, recebem um par fixo calculado a partir do nome.
 const PARES: [string, string][] = [
-  ["#ffc94d", "#c4ff4d"],
-  ["#ff4057", "#8b5cf6"],
-  ["#8b5cf6", "#3ee6f0"],
+  ["#ff7a1a", "#ffb347"],
+  ["#f9c22e", "#3b6fd1"],
+  ["#e3202b", "#7a0d14"],
   ["#ff5fa8", "#ffc94d"],
   ["#3ee6f0", "#c4ff4d"],
-  ["#c4ff4d", "#ff5fa8"],
+  ["#8b5cf6", "#3ee6f0"],
 ];
-const CONHECIDAS: Record<string, number> = { shonen: 0, dark: 1, "games & herois": 2, "street tokyo": 3 };
+const CONHECIDAS: Record<string, number> = { naruto: 0, "one piece": 1, berserk: 2 };
 
 export function coresDaColecao(categoria: string | null): [string, string] {
   const chave = semAcento(categoria ?? "");

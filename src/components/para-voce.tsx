@@ -1,12 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { recomendar } from "@/lib/api";
 import { useCarrinho } from "@/lib/carrinho";
 import { usePesos } from "@/lib/perfil";
 import type { Produto } from "@/lib/tipos";
 import { GradeProdutos } from "./card-produto";
-import { Secao } from "./secao";
 
 // "Para você": aparece quando o navegador já aprendeu o gosto do visitante; senão mostra os destaques.
 export function ParaVoce({ destaques }: { destaques: Produto[] }) {
@@ -27,8 +27,14 @@ export function ParaVoce({ destaques }: { destaques: Produto[] }) {
   const produtos = recomendados.length ? recomendados : destaques;
   if (produtos.length === 0) return null;
   return (
-    <Secao id="para-voce" titulo="Para você" link={{ href: "/catalogo", texto: "Ver tudo" }}>
-      <GradeProdutos produtos={produtos.slice(0, 12)} />
-    </Secao>
+    // Um bloco único de produtos, sem título, num painel de vidro de ponta a ponta.
+    <section id="para-voce" aria-label="Produtos" className="w-full scroll-mt-20 px-4 py-14 sm:px-8 lg:px-12">
+      <div>
+        <GradeProdutos produtos={produtos.slice(0, 12)} />
+        <div className="mt-8 flex justify-center">
+          <Link href="/catalogo" className="btn">Ver catálogo completo</Link>
+        </div>
+      </div>
+    </section>
   );
 }

@@ -122,7 +122,7 @@ export function CarrinhoGaveta() {
                         <Link
                           href={`/produto/${i.produtoId}`}
                           onClick={() => setAberto(false)}
-                          className="line-clamp-1 text-sm font-medium hover:text-lima"
+                          className="line-clamp-1 text-sm hover:text-lima"
                         >
                           {i.nome}
                         </Link>
@@ -137,7 +137,7 @@ export function CarrinhoGaveta() {
                           >
                             <Minus size={12} />
                           </button>
-                          <span className="w-6 text-center text-sm font-semibold">{i.qtd}</span>
+                          <span className="w-6 text-center text-sm">{i.qtd}</span>
                           <button
                             className="rounded-full bg-white/10 p-1.5 hover:bg-white/20"
                             aria-label={`Aumentar ${i.nome}`}

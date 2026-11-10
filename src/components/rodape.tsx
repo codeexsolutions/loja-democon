@@ -18,7 +18,7 @@ export function Rodape() {
             Catálogo
           </Link>
           <Link href="/#para-voce" className="hover:text-texto">
-            Para você
+            Produtos
           </Link>
           {whatsapp && (
             <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener" className="hover:text-texto">

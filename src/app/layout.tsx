@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
+import { Bangers, Bricolage_Grotesque, Metal_Mania, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { CarrinhoProvider } from "@/lib/carrinho";
 import { LojaProvider } from "@/lib/loja";
@@ -12,6 +12,9 @@ import { FundoPixel } from "@/components/fundo-pixel";
 
 const titulo = Bricolage_Grotesque({ variable: "--font-titulo", subsets: ["latin"] });
 const corpo = Space_Grotesk({ variable: "--font-corpo", subsets: ["latin"] });
+// Só nos títulos do lookbook: letra de mangá (Naruto, One Piece) e gótica (Berserk).
+const hq = Bangers({ variable: "--font-hq", subsets: ["latin"], weight: "400" });
+const gotica = Metal_Mania({ variable: "--font-gotica", subsets: ["latin"], weight: "400" });
 
 export const viewport: Viewport = { themeColor: "#08070c" };
 
@@ -20,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
   if (v.estado !== "ok") return { title: "Loja não encontrada" };
   return {
     title: { default: v.loja.nome, template: `%s | ${v.loja.nome}` },
-    description: `Camisas e jerseys geek na ${v.loja.nome}. Escolha, monte o carrinho e finalize pelo WhatsApp.`,
+    description: `Camisas oversized sublimadas de anime na ${v.loja.nome}: Naruto, One Piece e Berserk. Escolha, monte o carrinho e finalize pelo WhatsApp.`,
   };
 }
 
@@ -30,7 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     // suppressHydrationWarning: extensões do navegador (tradutores, etc.) mexem na tag <html>
     // antes do React carregar e geravam um aviso falso de hidratação.
-    <html lang="pt-BR" className={`${titulo.variable} ${corpo.variable} antialiased`} suppressHydrationWarning>
+    <html lang="pt-BR" className={`${titulo.variable} ${corpo.variable} ${hq.variable} ${gotica.variable} antialiased`} suppressHydrationWarning>
       <body className="min-h-svh overflow-x-hidden">
         <FundoPixel />
         {v.estado === "ok" ? (
